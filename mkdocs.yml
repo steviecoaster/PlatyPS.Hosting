@@ -1,0 +1,14 @@
+site_name: PlatyPS.Hosting
+repo_url: https://github.com/steviecoaster/PlatyPS.Hosting
+docs_dir: docs
+
+theme:
+  name: readthedocs
+
+nav:
+  - Home: index.md
+  - PlatyPS.Hosting:
+    - Module Index: PlatyPS.Hosting/index.md
+    - Export-HtmlCommandHelp: PlatyPS.Hosting/Export-HtmlCommandHelp.md
+    - New-ModuleHelp: PlatyPS.Hosting/New-ModuleHelp.md
+    - Publish-ModuleHelp: PlatyPS.Hosting/Publish-ModuleHelp.md
