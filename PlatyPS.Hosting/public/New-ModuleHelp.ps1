@@ -77,6 +77,7 @@ function New-ModuleHelp {
             $null = New-Item $OutputFolder -ItemType Directory
         }
 
+        # Generate the CommandInfo objects via reflection
         $commandHelp = New-CommandHelp -CommandInfo (Get-Command -Module $ModuleName)
 
         $exportMamlCommandHelpSplat = @{
@@ -84,16 +85,16 @@ function New-ModuleHelp {
             OutputFolder = (Join-Path $OutputFolder 'maml')
         }
 
+        # Create Maml from CommandInfo objects
         Export-MamlCommandHelp @exportMamlCommandHelpSplat
-
-        $markdownFolder = Join-Path $OutputFolder 'markdown'
 
         $newMarkdownCommandHelpSplat = @{
             ModuleInfo     = Get-Module -Name $ModuleName
-            OutputFolder   = $markdownFolder
+            OutputFolder   = (Join-Path $OutputFolder 'markdown')
             WithModulePage = $true
         }
-        
+
+        # Create Markdown from MAML
         New-MarkdownCommandHelp @newMarkdownCommandHelpSplat
 
         if ($Html) {
@@ -103,6 +104,7 @@ function New-ModuleHelp {
             Measure-PlatyPSMarkdown -Path (Join-Path $markdownFolder $ModuleName '*.md') |
                 Where-Object Filetype -match 'CommandHelp' |
                 Import-MarkdownCommandHelp -Path { $_.FilePath } |
+                # Create HTML from markdown if requested
                 Export-HtmlCommandHelp -OutputFolder $htmlFolder -Force -ThemeFile $ThemeFile
         }
     }
