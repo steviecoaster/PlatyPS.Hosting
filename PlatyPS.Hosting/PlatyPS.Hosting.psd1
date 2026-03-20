@@ -12,7 +12,7 @@
 RootModule = '.\PlatyPS.Hosting.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -105,7 +105,7 @@ PrivateData = @{
         LicenseUri = 'https://github.com/steviecoaster/PlatyPS.Hosting/blob/main/LICENSE'
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri = 'https://github.com/steviecoaster/PlatyPS.Hosting'
 
         # A URL to an icon representing this module.
         # IconUri = ''
