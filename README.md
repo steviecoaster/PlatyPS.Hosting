@@ -8,6 +8,8 @@ Export-HtmlCommandHelp  # CommandHelp objects → static HTML site
 Publish-ModuleHelp      # HTML files → IIS web server (local or remote)
 ```
 
+![PlatyPS.Hosting home](screenshots/home.png)
+
 ---
 
 ## Requirements
@@ -24,8 +26,16 @@ Publish-ModuleHelp      # HTML files → IIS web server (local or remote)
 
 ## Installation
 
+### Windows PowerShell
+
 ```powershell
-Import-Module .\PlatyPS.Hosting.psd1
+Install-Module PlatyPS.Hosting
+```
+
+### PowerShell 7+
+
+```powershell
+Install-PSResource PlatyPS.Hosting
 ```
 
 ---
@@ -77,6 +87,8 @@ Import-Module MyModule
 New-ModuleHelp -ModuleName MyModule -OutputFolder .\docs -Html -ThemeFile .\themes\Dracula.psd1
 ```
 
+![New-ModuleHelp](screenshots/New-ModuleHelp.png)
+
 ---
 
 ### `Export-HtmlCommandHelp`
@@ -120,6 +132,8 @@ Measure-PlatyPSMarkdown -Path .\docs\MyModule\*.md |
     Import-MarkdownCommandHelp -Path { $_.FilePath } |
     Export-HtmlCommandHelp -OutputFolder .\help\html -ThemeFile .\themes\Synthwave.psd1 -Force
 ```
+
+![Export-HtmlCommandHelp](screenshots/Export-HtmlCommandHelp.png)
 
 ---
 
@@ -170,6 +184,8 @@ Publish-ModuleHelp -SiteName MyDocsSite `
                    -Credential $cred `
                    -Force
 ```
+
+![Publish-ModuleHelp](screenshots/Publish-ModuleHelp.png)
 
 ---
 
