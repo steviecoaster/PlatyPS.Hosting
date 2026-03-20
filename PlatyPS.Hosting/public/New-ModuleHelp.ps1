@@ -88,9 +88,10 @@ function New-ModuleHelp {
         # Create Maml from CommandInfo objects
         Export-MamlCommandHelp @exportMamlCommandHelpSplat
 
+        $markdownFolder = Join-Path $OutputFolder 'markdown'
         $newMarkdownCommandHelpSplat = @{
             ModuleInfo     = Get-Module -Name $ModuleName
-            OutputFolder   = (Join-Path $OutputFolder 'markdown')
+            OutputFolder   = $markdownFolder
             WithModulePage = $true
         }
 
