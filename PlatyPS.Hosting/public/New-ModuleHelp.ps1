@@ -55,7 +55,7 @@ function New-ModuleHelp {
 
         Generates MAML, Markdown, and HTML help for the module.
     #>
-    [CmdletBinding()]
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/New-ModuleHelp/')]
     Param(
         [Parameter(Mandatory)]
         [String]

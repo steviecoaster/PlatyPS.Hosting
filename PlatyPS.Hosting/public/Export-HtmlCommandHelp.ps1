@@ -51,7 +51,7 @@
     Import-MarkdownCommandHelp -Path .\docs\MyModule\Get-Widget.md |
         .\Export-HtmlCommandHelp.ps1 -OutputFolder .\html -PassThru
 #>
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Export-HtmlCommandHelp/',SupportsShouldProcess)]
     param(
         [Parameter(Mandatory, ValueFromPipeline)]
         [Microsoft.PowerShell.PlatyPS.Model.CommandHelp[]]

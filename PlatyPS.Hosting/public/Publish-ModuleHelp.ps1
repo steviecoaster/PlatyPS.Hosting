@@ -48,14 +48,8 @@ function Publish-ModuleHelp {
 
         Stops the MyDocsSite IIS site on the remote computer webserver01 and copies the
         HTML help files, authenticating with the provided credentials.
-
-        .LINK
-        Export-HtmlCommandHelp
-
-        .LINK
-        New-ModuleHelp
     #>
-    [CmdletBinding()]
+    [CmdletBinding(HelpUri='https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Publish-ModuleHelp/')]
     Param(
         [Parameter()]
         [String]
