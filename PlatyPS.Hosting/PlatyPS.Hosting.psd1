@@ -30,7 +30,7 @@ CompanyName = ''
 Copyright = '2026'
 
 # Description of the functionality provided by this module
-# Description = ''
+Description = 'PlatyPS.Hosting is a PowerShell module that extends the Microsoft.PowerShell.PlatyPS v1 help authoring workflow. It provides three commands that together let you go from a loaded module to a published, browser-friendly HTML documentation site hosted on IIS.'
 
 # Minimum version of the PowerShell engine required by this module
 # PowerShellVersion = ''
@@ -102,7 +102,7 @@ PrivateData = @{
         # Tags = @()
 
         # A URL to the license for this module.
-        # LicenseUri = ''
+        LicenseUri = 'https://github.com/steviecoaster/PlatyPS.Hosting/blob/main/LICENSE'
 
         # A URL to the main website for this project.
         # ProjectUri = ''
@@ -127,7 +127,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
- HelpInfoURI = 'http://help.willywonka.dev/PlatyPS.Hosting'
+# HelpInfoURI = ''
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
