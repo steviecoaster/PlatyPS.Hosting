@@ -78,7 +78,9 @@ function New-ModuleHelp {
         }
 
         # Generate the CommandInfo objects via reflection
-        $commandHelp = New-CommandHelp -CommandInfo (Get-Command -Module $ModuleName)
+       $commands = Get-Command -Module $ModuleName |
+       Where-Object { $_ -isnot [System.Management.Automation.AliasInfo]}
+       $commandHelp = New-CommandHelp -CommandInfo $commands
 
         $exportMamlCommandHelpSplat = @{
             CommandHelp = $commandHelp
