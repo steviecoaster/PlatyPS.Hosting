@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Publish-ModuleHelp - PlatyPS.Hosting</title>
+    <title>ConvertTo-HugoFormat - PlatyPS.Hosting</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Publish-ModuleHelp";
-        var mkdocs_page_input_path = "PlatyPS.Hosting\\Publish-ModuleHelp.md";
+        var mkdocs_page_name = "ConvertTo-HugoFormat";
+        var mkdocs_page_input_path = "PlatyPS.Hosting\\ConvertTo-HugoFormat.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -47,13 +47,7 @@
               <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../">Module Index</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-HugoFormat/">ConvertTo-HugoFormat</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../New-ModuleHelp/">New-ModuleHelp</a>
-                  </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Publish-ModuleHelp</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">ConvertTo-HugoFormat</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#synopsis">SYNOPSIS</a>
     </li>
@@ -73,25 +67,33 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#example-2">EXAMPLE 2</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example-3">EXAMPLE 3</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#parameters">PARAMETERS</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#-confirm">-Confirm</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#-force">-Force</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-helpcontent">-HelpContent</a>
+    <li class="toctree-l3"><a class="reference internal" href="#-outputfolder">-OutputFolder</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-sitename">-SiteName</a>
+    <li class="toctree-l3"><a class="reference internal" href="#-passthru">-PassThru</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-siteroot">-SiteRoot</a>
+    <li class="toctree-l3"><a class="reference internal" href="#-path">-Path</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-rootindex">-RootIndex</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-whatif">-WhatIf</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#commonparameters">CommonParameters</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#inputs">INPUTS</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#systemstring">System.String[]</a>
+    </li>
+        </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#outputs">OUTPUTS</a>
     </li>
@@ -100,6 +102,12 @@
     <li class="toctree-l2"><a class="reference internal" href="#related-links">RELATED LINKS</a>
     </li>
     </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../New-ModuleHelp/">New-ModuleHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Publish-ModuleHelp/">Publish-ModuleHelp</a>
                   </li>
               </ul>
       </div>
@@ -117,9 +125,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">PlatyPS.Hosting</li>
-      <li class="breadcrumb-item active">Publish-ModuleHelp</li>
+      <li class="breadcrumb-item active">ConvertTo-HugoFormat</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/steviecoaster/PlatyPS.Hosting/edit/master/docs/PlatyPS.Hosting/Publish-ModuleHelp.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/steviecoaster/PlatyPS.Hosting/edit/master/docs/PlatyPS.Hosting/ConvertTo-HugoFormat.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -127,58 +135,59 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="publish-modulehelp">Publish-ModuleHelp</h1>
+                <h1 id="convertto-hugoformat">ConvertTo-HugoFormat</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Publishes PowerShell module HTML help files to an IIS web server.</p>
+<p>Converts PlatyPS-generated Markdown files to Hugo-compatible format.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="__allparametersets">__AllParameterSets</h3>
-<pre><code>Publish-ModuleHelp [[-SiteName] &lt;string&gt;] [[-SiteRoot] &lt;string&gt;] [[-HelpContent] &lt;string[]&gt;]
- [-Force] [&lt;CommonParameters&gt;]
+<pre><code>ConvertTo-HugoFormat [-Path] &lt;string[]&gt; [-OutputFolder] &lt;string&gt; [-Force] [-RootIndex] [-PassThru]
+ [-WhatIf] [-Confirm] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="aliases">ALIASES</h2>
-<p>None</p>
+<p>This cmdlet has the following aliases,
+  {{Insert list of aliases}}</p>
 <h2 id="description">DESCRIPTION</h2>
-<p>Publish-ModuleHelp stops the specified IIS website and copies the provided HTML
-help content to the site's root directory.
-Use this function after generating HTML
-help with Export-HtmlCommandHelp to deploy the output to a local or remote IIS site.</p>
+<p>ConvertTo-HugoFormat reads PlatyPS Markdown files and rewrites them with:</p>
+<ul>
+<li>Hugo front matter (title, weight) replacing PlatyPS YAML metadata</li>
+<li>Module index pages renamed to _index.md (Hugo branch bundle convention)</li>
+<li>SYNTAX section cleaned up (removes __AllParameterSets subheading)</li>
+<li>ALIASES section cleaned up (removes unresolved {{...}} placeholders)</li>
+<li>Optional root content/_index.md generated from the module page (-RootIndex)</li>
+</ul>
+<p>The output is ready to drop into a Hugo content directory.
+Module pages
+receive chapter: true so the Relearn theme treats them as section headings.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName    = 'MyDocsSite'
-    SiteRoot    = 'C:\moduledocs\mydocssite'
-    HelpContent = '.\help\html\MyModule'
-}
-Publish-ModuleHelp @publishSplat
-</code></pre>
-<p>Stops the MyDocsSite IIS site and copies the HTML help files from the local
-.\help\html\MyModule folder to C:\moduledocs\mydocssite.</p>
+<p>ConvertTo-HugoFormat -Path .\help\markdown\PlatyPS.Hosting -OutputFolder .\hugo\content\PlatyPS.Hosting -RootIndex</p>
+<p>Converts all PlatyPS Markdown files and also generates .\hugo\content_index.md
+from the module description and cmdlet synopses.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName    = 'MyDocsSite'
-    SiteRoot    = 'C:\moduledocs\mydocssite'
-    HelpContent = '.\help\html\MyModule'
-    Force       = $true
-}
-Publish-ModuleHelp @publishSplat
-</code></pre>
-<p>Stops the MyDocsSite IIS site and copies the HTML help files, overwriting any
-existing files in the destination.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName     = 'MyDocsSite'
-    SiteRoot     = 'C:\moduledocs\mydocssite'
-    HelpContent  = '.\help\html\MyModule'
-    Computername = 'webserver01'
-    Credential   = Get-Credential
-}
-Publish-ModuleHelp @publishSplat
-</code></pre>
-<p>Stops the MyDocsSite IIS site on the remote computer webserver01 and copies the
-HTML help files, authenticating with the provided credentials.</p>
+<p>Get-Item .\help\markdown\MyModule\New-Widget.md |
+    ConvertTo-HugoFormat -OutputFolder .\hugo\content\MyModule -PassThru</p>
+<p>Converts a single file and returns the resulting FileInfo to the pipeline.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before running the cmdlet.</p>
+<pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+</code></pre>
 <h3 id="-force">-Force</h3>
-<p>When specified, overwrites existing files in the destination without prompting.</p>
+<p>Overwrite existing output files without prompting.</p>
 <pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
 DefaultValue: False
 SupportsWildcards: false
@@ -194,45 +203,10 @@ DontShow: false
 AcceptedValues: []
 HelpMessage: ''
 </code></pre>
-<h3 id="-helpcontent">-HelpContent</h3>
-<p>One or more paths to the HTML help files or folders to copy to the site root.</p>
-<pre><code class="language-yaml">Type: System.String[]
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 2
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-</code></pre>
-<h3 id="-sitename">-SiteName</h3>
-<p>The name of the IIS site to publish help content to.
-The site will be stopped
-before the content is copied.</p>
-<pre><code class="language-yaml">Type: System.String
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 0
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-</code></pre>
-<h3 id="-siteroot">-SiteRoot</h3>
-<p>The file system path to the root folder of the IIS site where the help content
-will be copied.</p>
+<h3 id="-outputfolder">-OutputFolder</h3>
+<p>Destination folder for the converted files.
+Created automatically if it
+does not exist.</p>
 <pre><code class="language-yaml">Type: System.String
 DefaultValue: ''
 SupportsWildcards: false
@@ -240,6 +214,82 @@ Aliases: []
 ParameterSets:
 - Name: (All)
   Position: 1
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+</code></pre>
+<h3 id="-passthru">-PassThru</h3>
+<p>Emit the generated FileInfo objects to the pipeline.</p>
+<pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+</code></pre>
+<h3 id="-path">-Path</h3>
+<p>Path to one or more PlatyPS Markdown files, or a directory containing them.
+Accepts pipeline input.</p>
+<pre><code class="language-yaml">Type: System.String[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- FullName
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+</code></pre>
+<h3 id="-rootindex">-RootIndex</h3>
+<p>When processing a directory, also generate a root content/_index.md one
+level above OutputFolder.
+The file is built from the module page title,
+description, and the synopsis of each cmdlet page.
+Has no effect when
+processing individual files.</p>
+<pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Runs the command in a mode that only reports what would happen without performing the actions.</p>
+<pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
   IsRequired: false
   ValueFromPipeline: false
   ValueFromPipelineByPropertyName: false
@@ -254,18 +304,18 @@ HelpMessage: ''
 -ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
 <a href="https://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="inputs">INPUTS</h2>
+<h3 id="systemstring">System.String[]</h3>
+<p>{{ Fill in the Description }}</p>
 <h2 id="outputs">OUTPUTS</h2>
 <h2 id="notes">NOTES</h2>
 <h2 id="related-links">RELATED LINKS</h2>
-<ul>
-<li><a href="../Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a></li>
-<li><a href="../New-ModuleHelp/">New-ModuleHelp</a></li>
-</ul>
+<p>{{ Fill in the related links here }}</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../New-ModuleHelp/" class="btn btn-neutral float-left" title="New-ModuleHelp"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../" class="btn btn-neutral float-left" title="Module Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Export-HtmlCommandHelp/" class="btn btn-neutral float-right" title="Export-HtmlCommandHelp">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -292,8 +342,10 @@ HelpMessage: ''
         </span>
     
     
-      <span><a href="../New-ModuleHelp/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../" style="color: #fcfcfc">&laquo; Previous</a></span>
     
+    
+      <span><a href="../Export-HtmlCommandHelp/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
