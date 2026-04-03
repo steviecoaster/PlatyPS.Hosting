@@ -4,12 +4,15 @@ BeforeAll {
     $ModuleManifest = Join-Path $ModuleRoot -ChildPath 'PlatyPS.Hosting.psd1'
     Import-Module $ModuleManifest -Force
 
-    if (-not (Get-Command -Name 'Import-MarkdownCommandHelp' -ErrorAction SilentlyContinue)) {
+    if (-not (Get-Module -Name 'Microsoft.PowerShell.PlatyPS')) {
         Import-Module Microsoft.PowerShell.PlatyPS -ErrorAction SilentlyContinue
     }
+
+    $script:MarkdownRoot = Join-Path $RepoRoot 'help' 'markdown' 'PlatyPS.Hosting'
+    $script:CommonParameters = [System.Management.Automation.PSCmdlet]::CommonParameters
 }
 
-$publicFunctions =(Get-Command -Module PlatyPS.Hosting).Name
+$publicFunctions = (Get-Command -Module PlatyPS.Hosting).Name
 
 Describe '<Function> - Module Export' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
     It 'is exported by PlatyPS.Hosting' {
@@ -27,7 +30,6 @@ Describe '<Function> - CommandInfo' -ForEach ($publicFunctions | ForEach-Object 
     }
 
     It 'CommandInfo has a Definition (Syntax)' {
-        # Definition exposes the full source / param block – always non-empty for functions
         $command.Definition | Should -Not -BeNullOrEmpty
     }
 
@@ -37,71 +39,43 @@ Describe '<Function> - CommandInfo' -ForEach ($publicFunctions | ForEach-Object 
     }
 }
 
-Describe '<Function> - Help Content' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
+Describe '<Function> - Markdown Help' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
     BeforeAll {
-        $help = Get-Help -Name $Function -Full
-    }
-
-    It 'has Syntax' {
-        $help.syntax | Should -Not -BeNullOrEmpty
-    }
-
-    It 'has a Description' {
-        $help.description | Should -Not -BeNullOrEmpty
-        ($help.description | Select-Object -ExpandProperty Text -ErrorAction SilentlyContinue) |
-            Should -Not -BeNullOrEmpty
-    }
-
-    It 'Description does not contain unfilled PlatyPS placeholders' {
-        $text = ($help.description | Select-Object -ExpandProperty Text -ErrorAction SilentlyContinue) -join ' '
-        $text | Should -Not -Match '\{\{.+\}\}' -Because 'placeholder text must be replaced with real content'
-    }
-
-    It 'has at least one Example' {
-        $help.examples.example | Should -Not -BeNullOrEmpty
-        @($help.examples.example).Count | Should -BeGreaterOrEqual 1
-    }
-
-    It 'no Example contains unfilled PlatyPS placeholders' {
-        $help.examples.example | ForEach-Object {
-            $exampleText = "$($_.introduction)$($_.code)$($_.remarks)"
-            $exampleText | Should -Not -Match '\{\{.+\}\}' `
-                -Because "Example '$($_.title)' must have real content, not placeholder text"
-        }
-    }
-
-    It 'has Parameters documented' {
-        $help.parameters.parameter | Should -Not -BeNullOrEmpty
-    }
-
-    It 'every documented parameter has a description' {
-        $help.parameters.parameter | ForEach-Object {
-            $_.description.Text |
-                Should -Not -BeNullOrEmpty -Because "-$($_.name) needs a description"
-        }
-    }
-
-    It 'no parameter description contains unfilled PlatyPS placeholders' {
-        $help.parameters.parameter | ForEach-Object {
-            $desc = $_.description.Text -join ' '
-            $desc | Should -Not -Match '\{\{.+\}\}' `
-                -Because "-$($_.name) parameter description must not contain placeholder text"
-        }
-    }
-}
-
-Describe '<Function> - Markdown File Structure' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
-    BeforeAll {
-        $markdownPath = "$PSScriptRoot\..\PlatyPS.Hosting\help\markdown\PlatyPS.Hosting\$Function.md"
+        $markdownPath = Join-Path $script:MarkdownRoot "$Function.md"
         $script:cmdHelp = $null
         if ((Test-Path $markdownPath) -and
             (Get-Command -Name 'Import-MarkdownCommandHelp' -ErrorAction SilentlyContinue)) {
             $script:cmdHelp = Import-MarkdownCommandHelp -Path $markdownPath -ErrorAction SilentlyContinue
         }
+
+        # Build parameter cross-reference table (pattern from Test-ParameterInfo.ps1)
+        $script:paramResults = @{}
+        if ($script:cmdHelp) {
+            $cmdInfo = Get-Command -Name $Function
+            $cmdParameters = $cmdInfo.Parameters.Keys | Where-Object { $_ -notin $script:CommonParameters }
+            foreach ($cp in $cmdParameters) {
+                $script:paramResults[$cp] = [pscustomobject]@{
+                    Name         = $cp
+                    IsDefined    = $true
+                    IsDocumented = $false
+                }
+            }
+            foreach ($mdp in $script:cmdHelp.Parameters.Name) {
+                if ($mdp -in $script:paramResults.Keys) {
+                    $script:paramResults[$mdp].IsDocumented = $true
+                } else {
+                    $script:paramResults[$mdp] = [pscustomobject]@{
+                        Name         = $mdp
+                        IsDefined    = $false
+                        IsDocumented = $true
+                    }
+                }
+            }
+        }
     }
 
     It 'has a Markdown source file' {
-        $markdownPath | Should -Exist
+        Join-Path $script:MarkdownRoot "$Function.md" | Should -Exist
     }
 
     It 'can be imported as a CommandHelp object' {
@@ -160,12 +134,30 @@ Describe '<Function> - Markdown File Structure' -ForEach ($publicFunctions | For
         }
     }
 
-    It 'has Parameters documented' {
+    It 'every command parameter is documented in Markdown' {
         if (-not $script:cmdHelp) { Set-ItResult -Skipped -Because 'CommandHelp object could not be loaded' }
-        @($script:cmdHelp.Parameters).Count | Should -BeGreaterThan 0
+        $undocumented = $script:paramResults.Values | Where-Object { $_.IsDefined -and -not $_.IsDocumented }
+        $undocumented | Should -BeNullOrEmpty -Because (
+            "These parameters are defined but not documented: $($undocumented.Name -join ', ')"
+        )
     }
 
-    It 'no Parameter description is a placeholder' {
+    It 'every documented parameter is defined in the command' {
+        if (-not $script:cmdHelp) { Set-ItResult -Skipped -Because 'CommandHelp object could not be loaded' }
+        $extra = $script:paramResults.Values | Where-Object { -not $_.IsDefined -and $_.IsDocumented }
+        $extra | Should -BeNullOrEmpty -Because (
+            "These parameters are documented but not defined: $($extra.Name -join ', ')"
+        )
+    }
+
+    It 'every documented parameter has a description' {
+        if (-not $script:cmdHelp) { Set-ItResult -Skipped -Because 'CommandHelp object could not be loaded' }
+        $script:cmdHelp.Parameters | ForEach-Object {
+            $_.Description | Should -Not -BeNullOrEmpty -Because "-$($_.Name) needs a description"
+        }
+    }
+
+    It 'no parameter description contains unfilled PlatyPS placeholders' {
         if (-not $script:cmdHelp) { Set-ItResult -Skipped -Because 'CommandHelp object could not be loaded' }
         $script:cmdHelp.Parameters | ForEach-Object {
             $_.Description | Should -Not -Match '\{\{.+\}\}' `
@@ -174,11 +166,9 @@ Describe '<Function> - Markdown File Structure' -ForEach ($publicFunctions | For
     }
 }
 
-# ─── 5. Module Markdown File (Import-MarkdownModuleFile) ─────────────────────
-
 Describe 'PlatyPS.Hosting - Module Markdown File' {
     BeforeAll {
-        $script:moduleMdPath = "$PSScriptRoot\..\PlatyPS.Hosting\help\markdown\PlatyPS.Hosting\PlatyPS.Hosting.md"
+        $script:moduleMdPath = Join-Path $script:MarkdownRoot 'PlatyPS.Hosting.md'
         $script:modHelp = $null
         if ((Test-Path $script:moduleMdPath) -and
             (Get-Command -Name 'Import-MarkdownModuleFile' -ErrorAction SilentlyContinue)) {
@@ -213,21 +203,27 @@ Describe 'PlatyPS.Hosting - Module Markdown File' {
         )
     }
 
-    # Verify every public function is referenced in the module index page
     It '<Function> is listed in the module Markdown file' `
         -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
         $script:moduleMdPath | Should -FileContentMatch ([regex]::Escape($Function))
     }
 }
 
-Describe '<Function> - RelatedLinks' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
+Describe '<Function> - Related Links' -ForEach ($publicFunctions | ForEach-Object { @{ Function = $_ } }) {
     BeforeAll {
-        $help = Get-Help -Name $Function -Full
-        $script:uris = @(
-            $help.relatedLinks.navigationLink |
-                Where-Object { -not [string]::IsNullOrWhiteSpace($_.uri) -and $_.uri -match '^https?://' } |
-                Select-Object -ExpandProperty uri
-        )
+        $markdownPath = Join-Path $script:MarkdownRoot "$Function.md"
+        $script:uris = @()
+        if ((Test-Path $markdownPath) -and
+            (Get-Command -Name 'Import-MarkdownCommandHelp' -ErrorAction SilentlyContinue)) {
+            $cmdHelp = Import-MarkdownCommandHelp -Path $markdownPath -ErrorAction SilentlyContinue
+            if ($cmdHelp) {
+                $script:uris = @(
+                    $cmdHelp.RelatedLinks |
+                        Where-Object { -not [string]::IsNullOrWhiteSpace($_.Uri) -and $_.Uri -match '^https?://' } |
+                        Select-Object -ExpandProperty Uri
+                )
+            }
+        }
     }
 
     It 'all related links resolve with HTTP 200' {
