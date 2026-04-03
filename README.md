@@ -1,11 +1,12 @@
 # PlatyPS.Hosting
 
-PlatyPS.Hosting is a PowerShell module that extends the [Microsoft.PowerShell.PlatyPS](https://github.com/PowerShell/platyPS) v1 help authoring workflow. It provides three commands that together let you go from a loaded module to a published, browser-friendly HTML documentation site hosted on IIS.
+PlatyPS.Hosting is a PowerShell module that extends the [Microsoft.PowerShell.PlatyPS](https://github.com/PowerShell/platyPS) v1 help authoring workflow. It provides commands that together let you go from a loaded module to a published, browser-friendly HTML documentation site — hosted on IIS or served as a static Hugo site.
 
 ```
 New-ModuleHelp          # reflection → MAML + Markdown (+ optional HTML)
 Export-HtmlCommandHelp  # CommandHelp objects → static HTML site
 Publish-ModuleHelp      # HTML files → IIS web server (local or remote)
+ConvertTo-HugoFormat    # PlatyPS Markdown → Hugo-compatible content
 ```
 
 ![PlatyPS.Hosting home](screenshots/home.png)
@@ -80,11 +81,21 @@ New-ModuleHelp
 ```powershell
 # MAML + Markdown only
 Import-Module MyModule
-New-ModuleHelp -ModuleName MyModule -OutputFolder .\docs
+
+$helpSplat = @{
+    ModuleName   = 'MyModule'
+    OutputFolder = '.\docs'
+}
+New-ModuleHelp @helpSplat
 
 # MAML + Markdown + HTML with the Dracula theme
-Import-Module MyModule
-New-ModuleHelp -ModuleName MyModule -OutputFolder .\docs -Html -ThemeFile .\themes\Dracula.psd1
+$helpSplat = @{
+    ModuleName   = 'MyModule'
+    OutputFolder = '.\docs'
+    Html         = $true
+    ThemeFile    = '.\themes\Dracula.psd1'
+}
+New-ModuleHelp @helpSplat
 ```
 
 ![New-ModuleHelp](screenshots/New-ModuleHelp.png)
@@ -122,15 +133,22 @@ Export-HtmlCommandHelp
 
 ```powershell
 # From live reflection
-Get-Command -Module MyModule |
-    New-CommandHelp |
-    Export-HtmlCommandHelp -OutputFolder .\help\html -Force
+$exportSplat = @{
+    OutputFolder = '.\help\html'
+    Force        = $true
+}
+Get-Command -Module MyModule | New-CommandHelp | Export-HtmlCommandHelp @exportSplat
 
 # From existing Markdown files
+$exportSplat = @{
+    OutputFolder = '.\help\html'
+    ThemeFile    = '.\themes\Synthwave.psd1'
+    Force        = $true
+}
 Measure-PlatyPSMarkdown -Path .\docs\MyModule\*.md |
     Where-Object Filetype -match 'CommandHelp' |
     Import-MarkdownCommandHelp -Path { $_.FilePath } |
-    Export-HtmlCommandHelp -OutputFolder .\help\html -ThemeFile .\themes\Synthwave.psd1 -Force
+    Export-HtmlCommandHelp @exportSplat
 ```
 
 ![Export-HtmlCommandHelp](screenshots/Export-HtmlCommandHelp.png)
@@ -170,22 +188,69 @@ Publish-ModuleHelp
 
 ```powershell
 # Local deployment
-Publish-ModuleHelp -SiteName MyDocsSite `
-                   -SiteRoot C:\inetpub\mydocssite `
-                   -HelpContent .\help\html\MyModule `
-                   -Force
+$publishSplat = @{
+    SiteName    = 'MyDocsSite'
+    SiteRoot    = 'C:\inetpub\mydocssite'
+    HelpContent = '.\help\html\MyModule'
+    Force       = $true
+}
+Publish-ModuleHelp @publishSplat
 
 # Remote deployment
-$cred = Get-Credential
-Publish-ModuleHelp -SiteName MyDocsSite `
-                   -SiteRoot C:\inetpub\mydocssite `
-                   -HelpContent (Get-ChildItem .\help\html -Filter *.html -Recurse).FullName `
-                   -Computername webserver01 `
-                   -Credential $cred `
-                   -Force
+$publishSplat = @{
+    SiteName    = 'MyDocsSite'
+    SiteRoot    = 'C:\inetpub\mydocssite'
+    HelpContent = (Get-ChildItem .\help\html -Filter *.html -Recurse).FullName
+    Computername = 'webserver01'
+    Credential  = Get-Credential
+    Force       = $true
+}
+Publish-ModuleHelp @publishSplat
 ```
 
 ![Publish-ModuleHelp](screenshots/Publish-ModuleHelp.png)
+
+---
+
+### `ConvertTo-HugoFormat`
+
+Converts PlatyPS-generated Markdown files into Hugo-compatible content pages.
+
+Rewrites PlatyPS YAML front matter to Hugo front matter, renames module pages to `_index.md` (Hugo branch bundle convention), cleans up the `__AllParameterSets` syntax subheading, and resolves unset alias placeholders. With `-RootIndex`, also generates a root `content/_index.md` home page derived from the module description and cmdlet synopses.
+
+#### Syntax
+
+```powershell
+ConvertTo-HugoFormat
+    -Path <String[]>
+    -OutputFolder <String>
+    [-RootIndex]
+    [-Force]
+    [-PassThru]
+```
+
+#### Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `Path` | `String[]` | Yes | Path to one or more PlatyPS Markdown files, or a directory containing them. Accepts pipeline input. |
+| `OutputFolder` | `String` | Yes | Destination folder for the converted files. Created automatically if it does not exist. |
+| `RootIndex` | `Switch` | No | When processing a directory, also generate a root `content/_index.md` one level above `OutputFolder`. |
+| `Force` | `Switch` | No | Overwrite existing output files without prompting. |
+| `PassThru` | `Switch` | No | Emit the generated `FileInfo` objects to the pipeline. |
+
+#### Examples
+
+```powershell
+# Convert all PlatyPS Markdown and generate a root index page
+$hugoSplat = @{
+    Path         = '.\help\markdown\PlatyPS.Hosting'
+    OutputFolder = '.\hugo\content\PlatyPS.Hosting'
+    RootIndex    = $true
+    Force        = $true
+}
+ConvertTo-HugoFormat @hugoSplat
+```
 
 ---
 
@@ -202,39 +267,81 @@ Three built-in themes ship with the module under the `themes\` folder. Pass the 
 To create a custom theme, copy `Default.psd1` and override only the keys you want to change. Any key not present in your file falls back to the built-in default automatically.
 
 ```powershell
-# Apply the Dracula theme
-New-ModuleHelp -ModuleName MyModule -OutputFolder .\docs -Html -ThemeFile .\themes\Dracula.psd1
+$helpSplat = @{
+    ModuleName   = 'MyModule'
+    OutputFolder = '.\docs'
+    Html         = $true
+    ThemeFile    = '.\themes\Dracula.psd1'
+}
+New-ModuleHelp @helpSplat
 ```
+
+---
+
+## Hugo Site
+
+In addition to the IIS HTML renderer, PlatyPS.Hosting includes a Hugo site configuration under `hugo/` using the [Relearn](https://mcshelby.github.io/hugo-theme-relearn/) theme. Use `ConvertTo-HugoFormat` to populate the content from your PlatyPS Markdown files, then serve or deploy with Hugo.
+
+### Quick start
+
+```powershell
+# Convert PlatyPS Markdown to Hugo content
+$hugoSplat = @{
+    Path         = '.\help\markdown\PlatyPS.Hosting'
+    OutputFolder = '.\hugo\content\PlatyPS.Hosting'
+    RootIndex    = $true
+    Force        = $true
+}
+ConvertTo-HugoFormat @hugoSplat
+
+# Serve locally
+Set-Location .\hugo
+hugo server
+```
+
+### Deploy to GitHub Pages
+
+A GitHub Actions workflow at `.github/workflows/hugo.yml` builds the Hugo site on every push to `main` and deploys it to GitHub Pages. To enable it:
+
+1. Go to **Settings → Pages** and set the source to **GitHub Actions**.
+2. Push to `main` — the workflow handles the rest.
 
 ---
 
 ## End-to-End Workflow
 
 ```powershell
-# 1. Import the modules
 Import-Module Microsoft.PowerShell.PlatyPS
 Import-Module .\PlatyPS.Hosting.psd1
 Import-Module MyModule
 
-# 2. Generate MAML, Markdown, and HTML in one step
-New-ModuleHelp -ModuleName MyModule `
-               -OutputFolder .\help `
-               -Html `
-               -ThemeFile .\themes\Dracula.psd1
+# 1. Generate MAML, Markdown, and HTML
+$helpSplat = @{
+    ModuleName   = 'MyModule'
+    OutputFolder = '.\help'
+    Html         = $true
+    ThemeFile    = '.\themes\Dracula.psd1'
+}
+New-ModuleHelp @helpSplat
 
-# 3. Publish to a local IIS site
-Publish-ModuleHelp -SiteName MyDocsSite `
-                   -SiteRoot C:\inetpub\mydocssite `
-                   -HelpContent .\help\html\MyModule `
-                   -Force
+# 2a. Publish to a local IIS site
+$publishSplat = @{
+    SiteName    = 'MyDocsSite'
+    SiteRoot    = 'C:\inetpub\mydocssite'
+    HelpContent = '.\help\html\MyModule'
+    Force       = $true
+}
+Publish-ModuleHelp @publishSplat
 
-# 3. (or) Publish to a remote IIS server
-Publish-ModuleHelp -SiteName MyDocsSite `
-                   -SiteRoot C:\inetpub\mydocssite `
-                   -HelpContent (Get-ChildItem .\help\html\MyModule -Filter *.html -Recurse).FullName `
-                   -Computername webserver01 `
-                   -Credential (Get-Credential) `
-                   -Force
+# 2b. (or) Convert to Hugo and serve
+$hugoSplat = @{
+    Path         = '.\help\markdown\MyModule'
+    OutputFolder = '.\hugo\content\MyModule'
+    RootIndex    = $true
+    Force        = $true
+}
+ConvertTo-HugoFormat @hugoSplat
+hugo server -s .\hugo
 ```
 
 ---
@@ -243,3 +350,4 @@ Publish-ModuleHelp -SiteName MyDocsSite `
 
 - [Microsoft.PowerShell.PlatyPS on GitHub](https://github.com/PowerShell/platyPS)
 - [IIS WebAdministration module](https://learn.microsoft.com/en-us/powershell/module/webadministration/)
+- [Hugo Relearn theme](https://mcshelby.github.io/hugo-theme-relearn/)
