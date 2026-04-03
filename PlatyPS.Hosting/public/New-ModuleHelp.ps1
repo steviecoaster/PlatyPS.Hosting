@@ -54,6 +54,8 @@ function New-ModuleHelp {
         New-ModuleHelp -ModuleName PowerShellUniversal.Plaster -OutputFolder .\docs -Html
 
         Generates MAML, Markdown, and HTML help for the module.
+
+    .NOTES
     #>
     [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/New-ModuleHelp/')]
     Param(
