@@ -47,7 +47,7 @@ function ConvertTo-HugoFormat {
 
         Converts a single file and returns the resulting FileInfo to the pipeline.
     #>
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-HugoFormat',SupportsShouldProcess)]
     Param(
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [Alias('FullName')]
