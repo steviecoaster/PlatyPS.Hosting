@@ -26,7 +26,12 @@ function ConvertTo-CodeBlock {
 
         Converts the fenced PowerShell code in the first example's Remarks to HTML.
     #>
-    param([string]$Markdown)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-CodeBlock/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [string]
+        $Markdown
+    )
     if (-not $Markdown) { return '' }
 
     $html    = [System.Text.StringBuilder]::new()

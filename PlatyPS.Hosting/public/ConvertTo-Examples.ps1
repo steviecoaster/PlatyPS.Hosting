@@ -23,7 +23,12 @@ function ConvertTo-Examples {
 
         Returns an HTML examples section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Examples/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Examples -or $Help.Examples.Count -eq 0) { return '' }
 
     $exBlocks = foreach ($ex in $Help.Examples) {

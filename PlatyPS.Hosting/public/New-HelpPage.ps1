@@ -38,10 +38,19 @@ function New-HelpPage {
         Returns the complete HTML string for the Get-Widget command page with sidebar
         navigation and the default theme applied.
     #>
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/New-HelpPage/')]
     param(
-        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp] $Help,
-        [string[]] $AllCommands = @(),
-        [hashtable] $Theme = @{}
+        [Parameter(Mandatory)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help,
+
+        [Parameter()]
+        [string[]]
+        $AllCommands = @(),
+
+        [Parameter()]
+        [hashtable]
+        $Theme = @{}
     )
 
     $title     = ConvertTo-HtmlEncoded $Help.Title

@@ -22,7 +22,12 @@ function ConvertTo-Notes {
 
         Returns an HTML notes section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Notes/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Notes) { return '' }
     $note = ($Help.Notes -split '\r?\n') |
             Where-Object { $_ -match '\S' } |

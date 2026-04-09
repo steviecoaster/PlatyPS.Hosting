@@ -34,10 +34,18 @@ function ConvertTo-InputsOutputs {
 
         Returns an HTML INPUTS section for the Get-Widget command.
     #>
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-InputsOutputs/')]
     param(
-        [string] $SectionTitle,
-        [string] $SectionId,
-        $Items    # List[InputOutput]
+        [Parameter(Mandatory)]
+        [string]
+        $SectionTitle,
+
+        [Parameter(Mandatory)]
+        [string]
+        $SectionId,
+
+        [Parameter(Mandatory)]
+        $Items
     )
     if (-not $Items -or $Items.Count -eq 0) {
         return Write-Section -Title $SectionTitle -Id $SectionId -Content '<p>None</p>'

@@ -75,30 +75,30 @@ function Publish-ModuleHelp {
 
         .NOTES
     #>
-    [CmdletBinding(HelpUri='https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Publish-ModuleHelp/')]
-    Param(
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Publish-ModuleHelp/')]
+    param(
         [Parameter()]
-        [String]
+        [string]
         $SiteName,
 
         [Parameter()]
-        [String]
+        [string]
         $SiteRoot,
 
         [Parameter()]
-        [String[]]
+        [string[]]
         $HelpContent,
 
         [Parameter()]
-        [String]
+        [string]
         $Computername,
 
         [Parameter()]
-        [PSCredential]
+        [pscredential]
         $Credential,
 
         [Parameter()]
-        [Switch]
+        [switch]
         $Force
     )
 

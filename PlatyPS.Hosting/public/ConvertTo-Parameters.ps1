@@ -23,7 +23,12 @@ function ConvertTo-Parameters {
 
         Returns an HTML parameters section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Parameters/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Parameters -or $Help.Parameters.Count -eq 0) { return '' }
 
     $paramBlocks = foreach ($p in $Help.Parameters) {

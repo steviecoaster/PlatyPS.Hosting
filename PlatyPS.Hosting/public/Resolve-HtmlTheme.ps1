@@ -30,8 +30,11 @@ function Resolve-HtmlTheme {
         Loads the Dracula theme file and merges it over the built-in defaults,
         returning the combined hashtable.
     #>
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Resolve-HtmlTheme/')]
     param(
-        [string] $ThemeFile
+        [Parameter()]
+        [string]
+        $ThemeFile
     )
 
     $defaults = [ordered]@{

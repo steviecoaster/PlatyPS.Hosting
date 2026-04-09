@@ -18,7 +18,12 @@ function ConvertTo-HtmlEncoded {
 
         Returns &lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;.
     #>
-    param([string]$Text)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-HtmlEncoded/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [string]
+        $Text
+    )
     if (-not $Text) { return '' }
     $Text -replace '&','&amp;' `
           -replace '<','&lt;'  `

@@ -71,13 +71,13 @@ function New-ModuleHelp {
     .NOTES
     #>
     [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/New-ModuleHelp/')]
-    Param(
+    param(
         [Parameter(Mandatory)]
-        [String]
+        [string]
         $ModuleName,
 
         [Parameter(Mandatory)]
-        [String]
+        [string]
         $OutputFolder,
 
         [switch]

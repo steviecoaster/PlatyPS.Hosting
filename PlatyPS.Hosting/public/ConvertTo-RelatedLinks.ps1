@@ -23,7 +23,12 @@ function ConvertTo-RelatedLinks {
 
         Returns an HTML related links section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-RelatedLinks/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.RelatedLinks -or $Help.RelatedLinks.Count -eq 0) { return '' }
 
     $links = foreach ($link in $Help.RelatedLinks) {

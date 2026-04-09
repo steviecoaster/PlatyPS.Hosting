@@ -31,10 +31,19 @@ function Write-Section {
         Returns a <section id="synopsis"> element with a SYNOPSIS heading and the
         provided paragraph as content.
     #>
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/Write-Section/')]
     param(
-        [string] $Title,
-        [string] $Content,
-        [string] $Id = ($Title.ToLower() -replace '\s','-')
+        [Parameter(Mandatory)]
+        [string]
+        $Title,
+
+        [Parameter(Mandatory)]
+        [string]
+        $Content,
+
+        [Parameter()]
+        [string]
+        $Id = ($Title.ToLower() -replace '\s', '-')
     )
     @"
         <section id="$Id">

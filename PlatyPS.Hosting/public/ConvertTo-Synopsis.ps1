@@ -21,6 +21,11 @@ function ConvertTo-Synopsis {
 
         Returns an HTML synopsis section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Synopsis/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     Write-Section -Title 'SYNOPSIS' -Content "<p>$(ConvertTo-HtmlEncoded $Help.Synopsis)</p>"
 }

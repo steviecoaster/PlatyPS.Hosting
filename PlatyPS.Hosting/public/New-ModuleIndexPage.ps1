@@ -34,10 +34,19 @@ function New-ModuleIndexPage {
 
         Returns the HTML string for the MyModule index page listing all commands.
     #>
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/New-ModuleIndexPage/')]
     param(
-        [string] $ModuleName,
-        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp[]] $Commands,
-        [hashtable] $Theme = @{}
+        [Parameter(Mandatory)]
+        [string]
+        $ModuleName,
+
+        [Parameter(Mandatory)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp[]]
+        $Commands,
+
+        [Parameter()]
+        [hashtable]
+        $Theme = @{}
     )
 
     $moduleEncoded = ConvertTo-HtmlEncoded $ModuleName

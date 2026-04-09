@@ -22,7 +22,12 @@ function ConvertTo-Description {
 
         Returns an HTML description section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Description/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Description) { return '' }
     $paras = ($Help.Description -split '\r?\n\r?\n') |
              Where-Object { $_ -match '\S' } |

@@ -22,7 +22,12 @@ function ConvertTo-Aliases {
 
         Returns an HTML aliases section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Aliases/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Aliases -or $Help.Aliases.Count -eq 0) { return '' }
 
     $items = $Help.Aliases | ForEach-Object { "<li><code>$(ConvertTo-HtmlEncoded $_)</code></li>" }

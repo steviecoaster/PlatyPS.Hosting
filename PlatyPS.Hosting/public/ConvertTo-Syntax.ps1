@@ -22,7 +22,12 @@ function ConvertTo-Syntax {
 
         Returns an HTML syntax section for the Get-Widget command.
     #>
-    param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
+    [CmdletBinding(HelpUri = 'https://steviecoaster.github.io/PlatyPS.Hosting/PlatyPS.Hosting/ConvertTo-Syntax/')]
+    param(
+        [Parameter(Mandatory, Position = 0)]
+        [Microsoft.PowerShell.PlatyPS.Model.CommandHelp]
+        $Help
+    )
     if (-not $Help.Syntax -or $Help.Syntax.Count -eq 0) { return '' }
 
     $blocks = foreach ($syntaxItem in $Help.Syntax) {
