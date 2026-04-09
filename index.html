@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/theme.css" />
     <link rel="stylesheet" href="css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="css/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -49,15 +50,45 @@
               </ul>
               <p class="caption"><span class="caption-text">PlatyPS.Hosting</span></p>
               <ul>
-                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/">Module Index</a>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/PlatyPS.Hosting/">Module Index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Aliases/">ConvertTo-Aliases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-CodeBlock/">ConvertTo-CodeBlock</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Description/">ConvertTo-Description</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Examples/">ConvertTo-Examples</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-HtmlEncoded/">ConvertTo-HtmlEncoded</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-HugoFormat/">ConvertTo-HugoFormat</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-InputsOutputs/">ConvertTo-InputsOutputs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Notes/">ConvertTo-Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Parameters/">ConvertTo-Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-RelatedLinks/">ConvertTo-RelatedLinks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Synopsis/">ConvertTo-Synopsis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/ConvertTo-Syntax/">ConvertTo-Syntax</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/New-HelpPage/">New-HelpPage</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/New-ModuleHelp/">New-ModuleHelp</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/New-ModuleIndexPage/">New-ModuleIndexPage</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/Publish-ModuleHelp/">Publish-ModuleHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/Resolve-HtmlTheme/">Resolve-HtmlTheme</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="PlatyPS.Hosting/Write-Section/">Write-Section</a>
                   </li>
               </ul>
       </div>
@@ -85,7 +116,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="platypshosting">PlatyPS.Hosting</h1>
-<p>PlatyPS.Hosting is a PowerShell module that extends the Microsoft.PowerShell.PlatyPS v1 help authoring workflow. It provides three commands that together let you go from a loaded module to a published, browser-friendly HTML documentation site hosted on IIS.</p>
+<p>PlatyPS.Hosting is a PowerShell module that extends the Microsoft.PowerShell.PlatyPS v1 help authoring workflow. It provides commands to generate, render, and publish browser-friendly HTML documentation from PlatyPS-authored help.</p>
 <h2 id="commands">Commands</h2>
 <table>
 <thead>
@@ -96,20 +127,80 @@
 </thead>
 <tbody>
 <tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Aliases/">ConvertTo-Aliases</a></td>
+<td>Renders the aliases for a command as an HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-CodeBlock/">ConvertTo-CodeBlock</a></td>
+<td>Converts markdown fenced code blocks to HTML &lt;pre&gt;&lt;code&gt; elements.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Description/">ConvertTo-Description</a></td>
+<td>Renders the description for a command as an HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Examples/">ConvertTo-Examples</a></td>
+<td>Renders the examples for a command as an HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-HtmlEncoded/">ConvertTo-HtmlEncoded</a></td>
+<td>HTML-encodes a string by replacing special characters with HTML entities.</td>
+</tr>
+<tr>
 <td><a href="PlatyPS.Hosting/ConvertTo-HugoFormat/">ConvertTo-HugoFormat</a></td>
 <td>Converts PlatyPS-generated Markdown files to Hugo-compatible format.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-InputsOutputs/">ConvertTo-InputsOutputs</a></td>
+<td>Renders an INPUTS or OUTPUTS section as HTML.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Notes/">ConvertTo-Notes</a></td>
+<td>Renders the NOTES section of a command as an HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Parameters/">ConvertTo-Parameters</a></td>
+<td>Renders the parameters for a command as a detailed HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-RelatedLinks/">ConvertTo-RelatedLinks</a></td>
+<td>Renders the related links for a command as an HTML section.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Synopsis/">ConvertTo-Synopsis</a></td>
+<td>Renders the SYNOPSIS section of a command as HTML.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/ConvertTo-Syntax/">ConvertTo-Syntax</a></td>
+<td>Renders the SYNTAX section of a command as HTML.</td>
 </tr>
 <tr>
 <td><a href="PlatyPS.Hosting/Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a></td>
 <td>Custom HTML renderer for PlatyPS CommandHelp objects.</td>
 </tr>
 <tr>
+<td><a href="PlatyPS.Hosting/New-HelpPage/">New-HelpPage</a></td>
+<td>Builds the complete HTML page for a single command.</td>
+</tr>
+<tr>
 <td><a href="PlatyPS.Hosting/New-ModuleHelp/">New-ModuleHelp</a></td>
 <td>Generates all help artifacts for a loaded module in one step.</td>
 </tr>
 <tr>
+<td><a href="PlatyPS.Hosting/New-ModuleIndexPage/">New-ModuleIndexPage</a></td>
+<td>Builds the HTML module index page for a set of commands.</td>
+</tr>
+<tr>
 <td><a href="PlatyPS.Hosting/Publish-ModuleHelp/">Publish-ModuleHelp</a></td>
-<td>Publishes generated HTML help to a local or remote IIS site.</td>
+<td>Publishes PowerShell module HTML help files to an IIS web server.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/Resolve-HtmlTheme/">Resolve-HtmlTheme</a></td>
+<td>Loads a theme psd1 and merges it over the built-in defaults.</td>
+</tr>
+<tr>
+<td><a href="PlatyPS.Hosting/Write-Section/">Write-Section</a></td>
+<td>Wraps HTML content in a styled &lt;section&gt; element.</td>
 </tr>
 </tbody>
 </table>
@@ -117,7 +208,7 @@
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="PlatyPS.Hosting/" class="btn btn-neutral float-right" title="Module Index">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="PlatyPS.Hosting/PlatyPS.Hosting/" class="btn btn-neutral float-right" title="Module Index">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -145,7 +236,7 @@
     
     
     
-      <span><a href="PlatyPS.Hosting/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="PlatyPS.Hosting/PlatyPS.Hosting/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
@@ -165,5 +256,5 @@
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2026-04-03 20:43:11.090949+00:00
+Build Date UTC : 2026-04-09 15:42:53.846432+00:00
 -->

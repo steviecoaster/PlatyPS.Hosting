@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../css/extra.css" rel="stylesheet" />
     
       <script>
         // Current page data
@@ -45,11 +46,35 @@
               </ul>
               <p class="caption"><span class="caption-text">PlatyPS.Hosting</span></p>
               <ul class="current">
-                  <li class="toctree-l1"><a class="reference internal" href="../">Module Index</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../PlatyPS.Hosting/">Module Index</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Aliases/">ConvertTo-Aliases</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-CodeBlock/">ConvertTo-CodeBlock</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Description/">ConvertTo-Description</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Examples/">ConvertTo-Examples</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-HtmlEncoded/">ConvertTo-HtmlEncoded</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-HugoFormat/">ConvertTo-HugoFormat</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-InputsOutputs/">ConvertTo-InputsOutputs</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Notes/">ConvertTo-Notes</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Parameters/">ConvertTo-Parameters</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-RelatedLinks/">ConvertTo-RelatedLinks</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Synopsis/">ConvertTo-Synopsis</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ConvertTo-Syntax/">ConvertTo-Syntax</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../New-HelpPage/">New-HelpPage</a>
                   </li>
                   <li class="toctree-l1 current"><a class="reference internal current" href="#">New-ModuleHelp</a>
     <ul class="current">
@@ -97,7 +122,13 @@
     </li>
     </ul>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../New-ModuleIndexPage/">New-ModuleIndexPage</a>
+                  </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Publish-ModuleHelp/">Publish-ModuleHelp</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Resolve-HtmlTheme/">Resolve-HtmlTheme</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Write-Section/">Write-Section</a>
                   </li>
               </ul>
       </div>
@@ -136,29 +167,34 @@
 <h2 id="aliases">ALIASES</h2>
 <p>None</p>
 <h2 id="description">DESCRIPTION</h2>
-<p>New-ModuleHelp builds three help outputs from a single reflection pass
-against a loaded module, writing each into its own sub-folder under
-OutputFolder:</p>
-<p>1.
-MAML  (<OutputFolder>\maml\<ModuleName>)
-   Updateable XML help suitable for packaging inside the module or
-   distributing via Save-Help / Update-Help.
- Generated with
-   Export-MamlCommandHelp.</p>
-<p>2.
-Markdown  (<OutputFolder>\markdown\<ModuleName>)
-   Human-readable source files that should be kept in version control
-   and hand-edited to add descriptions, examples, and notes.
-   Generated with New-MarkdownCommandHelp (including a module page).
-   On subsequent runs, use Update-MarkdownCommandHelp instead so that
-   hand-written content is preserved.</p>
-<p>3.
-HTML  (<OutputFolder>\html\<ModuleName>)  [optional, -Html switch]
-   A static website built on top of the PlatyPS CommandHelp object
-   model using the custom Export-HtmlCommandHelp renderer.
- HTML is
-   generated from the Markdown files rather than from live reflection,
-   so hand-edited descriptions, examples, and notes are included.</p>
+<p>New-ModuleHelp builds three help outputs from a single reflection pass against a loaded module,
+writing each into its own sub-folder under <code>OutputFolder</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Output</th>
+<th>Location</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MAML</strong></td>
+<td><code>&lt;OutputFolder&gt;\maml\&lt;ModuleName&gt;\</code></td>
+<td>Updateable XML help suitable for packaging inside the module or distributing via <code>Save-Help</code> / <code>Update-Help</code>. Generated with <code>Export-MamlCommandHelp</code>.</td>
+</tr>
+<tr>
+<td><strong>Markdown</strong></td>
+<td><code>&lt;OutputFolder&gt;\markdown\&lt;ModuleName&gt;\</code></td>
+<td>Human-readable source files that should be kept in version control and hand-edited to add descriptions, examples, and notes. Generated with <code>New-MarkdownCommandHelp</code> (including a module page). On subsequent runs, use <code>Update-MarkdownCommandHelp</code> so that hand-written content is preserved.</td>
+</tr>
+<tr>
+<td><strong>HTML</strong> <em>(optional)</em></td>
+<td><code>&lt;OutputFolder&gt;\html\&lt;ModuleName&gt;\</code></td>
+<td>A static website built on top of the PlatyPS CommandHelp object model using <code>Export-HtmlCommandHelp</code>. HTML is generated from the Markdown files rather than from live reflection, so hand-edited content is included. Requires the <code>-Html</code> switch.</td>
+</tr>
+</tbody>
+</table>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="language-powershell">$helpSplat = @{
@@ -269,8 +305,8 @@ HelpMessage: ''
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../Export-HtmlCommandHelp/" class="btn btn-neutral float-left" title="Export-HtmlCommandHelp"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Publish-ModuleHelp/" class="btn btn-neutral float-right" title="Publish-ModuleHelp">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../New-HelpPage/" class="btn btn-neutral float-left" title="New-HelpPage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../New-ModuleIndexPage/" class="btn btn-neutral float-right" title="New-ModuleIndexPage">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -297,10 +333,10 @@ HelpMessage: ''
         </span>
     
     
-      <span><a href="../Export-HtmlCommandHelp/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../New-HelpPage/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Publish-ModuleHelp/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../New-ModuleIndexPage/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

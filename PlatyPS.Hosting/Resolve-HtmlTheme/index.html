@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="shortcut icon" href="../../img/favicon.ico" />
-    <title>Publish-ModuleHelp - PlatyPS.Hosting</title>
+    <title>Resolve-HtmlTheme - PlatyPS.Hosting</title>
     <link rel="stylesheet" href="../../css/theme.css" />
     <link rel="stylesheet" href="../../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
@@ -13,8 +13,8 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "Publish-ModuleHelp";
-        var mkdocs_page_input_path = "PlatyPS.Hosting\\Publish-ModuleHelp.md";
+        var mkdocs_page_name = "Resolve-HtmlTheme";
+        var mkdocs_page_input_path = "PlatyPS.Hosting\\Resolve-HtmlTheme.md";
         var mkdocs_page_url = null;
       </script>
     
@@ -80,7 +80,9 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../New-ModuleIndexPage/">New-ModuleIndexPage</a>
                   </li>
-                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Publish-ModuleHelp</a>
+                  <li class="toctree-l1"><a class="reference internal" href="../Publish-ModuleHelp/">Publish-ModuleHelp</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Resolve-HtmlTheme</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#synopsis">SYNOPSIS</a>
     </li>
@@ -100,21 +102,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#example-2">EXAMPLE 2</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example-3">EXAMPLE 3</a>
-    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#parameters">PARAMETERS</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#-force">-Force</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-helpcontent">-HelpContent</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-sitename">-SiteName</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#-siteroot">-SiteRoot</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#commonparameters">CommonParameters</a>
+    <li class="toctree-l3"><a class="reference internal" href="#-themefile">-ThemeFile</a>
     </li>
         </ul>
     </li>
@@ -127,8 +119,6 @@
     <li class="toctree-l2"><a class="reference internal" href="#related-links">RELATED LINKS</a>
     </li>
     </ul>
-                  </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Resolve-HtmlTheme/">Resolve-HtmlTheme</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Write-Section/">Write-Section</a>
                   </li>
@@ -148,9 +138,9 @@
   <ul class="wy-breadcrumbs">
     <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
           <li class="breadcrumb-item">PlatyPS.Hosting</li>
-      <li class="breadcrumb-item active">Publish-ModuleHelp</li>
+      <li class="breadcrumb-item active">Resolve-HtmlTheme</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/steviecoaster/PlatyPS.Hosting/edit/master/docs/PlatyPS.Hosting/Publish-ModuleHelp.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/steviecoaster/PlatyPS.Hosting/edit/master/docs/PlatyPS.Hosting/Resolve-HtmlTheme.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -158,97 +148,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="publish-modulehelp">Publish-ModuleHelp</h1>
+                <h1 id="resolve-htmltheme">Resolve-HtmlTheme</h1>
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Publishes PowerShell module HTML help files to an IIS web server.</p>
+<p>Loads a theme psd1 and merges it over the built-in defaults.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="__allparametersets">__AllParameterSets</h3>
-<pre><code>Publish-ModuleHelp [[-SiteName] &lt;string&gt;] [[-SiteRoot] &lt;string&gt;] [[-HelpContent] &lt;string[]&gt;]
- [-Force] [&lt;CommonParameters&gt;]
+<pre><code>Resolve-HtmlTheme [[-ThemeFile] &lt;string&gt;]
 </code></pre>
 <h2 id="aliases">ALIASES</h2>
 <p>None</p>
 <h2 id="description">DESCRIPTION</h2>
-<p>Publish-ModuleHelp stops the specified IIS website and copies the provided HTML
-help content to the site's root directory.
-Use this function after generating HTML
-help with Export-HtmlCommandHelp to deploy the output to a local or remote IIS site.</p>
+<p>Returns a flat hashtable of CSS variable values keyed by variable name
+(without the leading --).
+ Any keys present in the caller-supplied file
+override the built-in defaults; missing keys fall back to the defaults.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName    = 'MyDocsSite'
-    SiteRoot    = 'C:\moduledocs\mydocssite'
-    HelpContent = '.\help\html\MyModule'
-}
-
-Publish-ModuleHelp @publishSplat
+<pre><code class="language-powershell">Resolve-HtmlTheme
 </code></pre>
-<p>Stops the MyDocsSite IIS site and copies the HTML help files from the local
-.\help\html\MyModule folder to C:\moduledocs\mydocssite.</p>
+<p>Returns the built-in default theme hashtable with all CSS variable values.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName    = 'MyDocsSite'
-    SiteRoot    = 'C:\moduledocs\mydocssite'
-    HelpContent = '.\help\html\MyModule'
-    Force       = $true
+<pre><code class="language-powershell">$themeParams = @{
+    ThemeFile = '.\themes\Dracula.psd1'
 }
 
-Publish-ModuleHelp @publishSplat
+Resolve-HtmlTheme @themeParams
 </code></pre>
-<p>Stops the MyDocsSite IIS site and copies the HTML help files, overwriting any
-existing files in the destination.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="language-powershell">$publishSplat = @{
-    SiteName     = 'MyDocsSite'
-    SiteRoot     = 'C:\moduledocs\mydocssite'
-    HelpContent  = '.\help\html\MyModule'
-    Computername = 'webserver01'
-    Credential   = Get-Credential
-}
-
-Publish-ModuleHelp @publishSplat
-</code></pre>
-<p>Stops the MyDocsSite IIS site on the remote computer webserver01 and copies the
-HTML help files, authenticating with the provided credentials.</p>
+<p>Loads the Dracula theme file and merges it over the built-in defaults,
+returning the combined hashtable.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-force">-Force</h3>
-<p>When specified, overwrites existing files in the destination without prompting.</p>
-<pre><code class="language-yaml">Type: System.Management.Automation.SwitchParameter
-DefaultValue: False
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: Named
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-</code></pre>
-<h3 id="-helpcontent">-HelpContent</h3>
-<p>One or more paths to the HTML help files or folders to copy to the site root.</p>
-<pre><code class="language-yaml">Type: System.String[]
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 2
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-</code></pre>
-<h3 id="-sitename">-SiteName</h3>
-<p>The name of the IIS site to publish help content to.
-The site will be stopped
-before the content is copied.</p>
+<h3 id="-themefile">-ThemeFile</h3>
+<p>Optional path to a .psd1 theme file.
+ When omitted the built-in default
+theme is returned.</p>
 <pre><code class="language-yaml">Type: System.String
 DefaultValue: ''
 SupportsWildcards: false
@@ -264,43 +196,16 @@ DontShow: false
 AcceptedValues: []
 HelpMessage: ''
 </code></pre>
-<h3 id="-siteroot">-SiteRoot</h3>
-<p>The file system path to the root folder of the IIS site where the help content
-will be copied.</p>
-<pre><code class="language-yaml">Type: System.String
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 1
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-</code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
--ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
-<a href="https://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="inputs">INPUTS</h2>
 <h2 id="outputs">OUTPUTS</h2>
 <h2 id="notes">NOTES</h2>
 <h2 id="related-links">RELATED LINKS</h2>
-<ul>
-<li><a href="../Export-HtmlCommandHelp/">Export-HtmlCommandHelp</a></li>
-<li><a href="../New-ModuleHelp/">New-ModuleHelp</a></li>
-</ul>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../New-ModuleIndexPage/" class="btn btn-neutral float-left" title="New-ModuleIndexPage"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../Resolve-HtmlTheme/" class="btn btn-neutral float-right" title="Resolve-HtmlTheme">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Publish-ModuleHelp/" class="btn btn-neutral float-left" title="Publish-ModuleHelp"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Write-Section/" class="btn btn-neutral float-right" title="Write-Section">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -327,10 +232,10 @@ HelpMessage: ''
         </span>
     
     
-      <span><a href="../New-ModuleIndexPage/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../Publish-ModuleHelp/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../Resolve-HtmlTheme/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../Write-Section/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
