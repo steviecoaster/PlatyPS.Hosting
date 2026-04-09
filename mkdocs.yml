@@ -5,11 +5,29 @@ docs_dir: docs
 theme:
   name: readthedocs
 
+extra_css:
+  - css/extra.css
+
 nav:
   - Home: index.md
   - PlatyPS.Hosting:
-    - Module Index: PlatyPS.Hosting/index.md
+    - Module Index: PlatyPS.Hosting/PlatyPS.Hosting.md
+    - ConvertTo-Aliases: PlatyPS.Hosting/ConvertTo-Aliases.md
+    - ConvertTo-CodeBlock: PlatyPS.Hosting/ConvertTo-CodeBlock.md
+    - ConvertTo-Description: PlatyPS.Hosting/ConvertTo-Description.md
+    - ConvertTo-Examples: PlatyPS.Hosting/ConvertTo-Examples.md
+    - ConvertTo-HtmlEncoded: PlatyPS.Hosting/ConvertTo-HtmlEncoded.md
     - ConvertTo-HugoFormat: PlatyPS.Hosting/ConvertTo-HugoFormat.md
+    - ConvertTo-InputsOutputs: PlatyPS.Hosting/ConvertTo-InputsOutputs.md
+    - ConvertTo-Notes: PlatyPS.Hosting/ConvertTo-Notes.md
+    - ConvertTo-Parameters: PlatyPS.Hosting/ConvertTo-Parameters.md
+    - ConvertTo-RelatedLinks: PlatyPS.Hosting/ConvertTo-RelatedLinks.md
+    - ConvertTo-Synopsis: PlatyPS.Hosting/ConvertTo-Synopsis.md
+    - ConvertTo-Syntax: PlatyPS.Hosting/ConvertTo-Syntax.md
     - Export-HtmlCommandHelp: PlatyPS.Hosting/Export-HtmlCommandHelp.md
+    - New-HelpPage: PlatyPS.Hosting/New-HelpPage.md
     - New-ModuleHelp: PlatyPS.Hosting/New-ModuleHelp.md
+    - New-ModuleIndexPage: PlatyPS.Hosting/New-ModuleIndexPage.md
     - Publish-ModuleHelp: PlatyPS.Hosting/Publish-ModuleHelp.md
+    - Resolve-HtmlTheme: PlatyPS.Hosting/Resolve-HtmlTheme.md
+    - Write-Section: PlatyPS.Hosting/Write-Section.md

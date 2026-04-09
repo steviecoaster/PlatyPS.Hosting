@@ -36,14 +36,23 @@ function ConvertTo-HugoFormat {
         Emit the generated FileInfo objects to the pipeline.
 
     .EXAMPLE
-        ConvertTo-HugoFormat -Path .\help\markdown\PlatyPS.Hosting -OutputFolder .\hugo\content\PlatyPS.Hosting -RootIndex
+        ```powershell
+        $hugoParams = @{
+            Path         = '.\help\markdown\PlatyPS.Hosting'
+            OutputFolder = '.\hugo\content\PlatyPS.Hosting'
+            RootIndex    = $true
+        }
+        ConvertTo-HugoFormat @hugoParams
+        ```
 
         Converts all PlatyPS Markdown files and also generates .\hugo\content\_index.md
         from the module description and cmdlet synopses.
 
     .EXAMPLE
+        ```powershell
         Get-Item .\help\markdown\MyModule\New-Widget.md |
             ConvertTo-HugoFormat -OutputFolder .\hugo\content\MyModule -PassThru
+        ```
 
         Converts a single file and returns the resulting FileInfo to the pipeline.
     #>

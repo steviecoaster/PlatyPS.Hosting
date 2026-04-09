@@ -1,4 +1,28 @@
 function ConvertTo-Parameters {
+    <#
+    .SYNOPSIS
+        Renders the parameters for a command as a detailed HTML section.
+
+    .DESCRIPTION
+        Accepts a PlatyPS CommandHelp model object and returns an HTML PARAMETERS
+        <section> containing a subsection for each parameter with required/position
+        badges, type, default value, aliases, accepted values, and wildcard support.
+        Returns an empty string if the command has no parameters.
+
+    .PARAMETER Help
+        The PlatyPS CommandHelp model object to extract parameter information from.
+
+    .EXAMPLE
+        ```powershell
+        $importParams = @{
+            Path = '.\docs\MyModule\Get-Widget.md'
+        }
+        $help = Import-MarkdownCommandHelp @importParams
+        ConvertTo-Parameters -Help $help
+        ```
+
+        Returns an HTML parameters section for the Get-Widget command.
+    #>
     param([Microsoft.PowerShell.PlatyPS.Model.CommandHelp]$Help)
     if (-not $Help.Parameters -or $Help.Parameters.Count -eq 0) { return '' }
 

@@ -1,4 +1,43 @@
 function New-HelpPage {
+    <#
+    .SYNOPSIS
+        Builds the complete HTML page for a single command.
+
+    .DESCRIPTION
+        Orchestrates all ConvertTo-* renderers to produce a full self-contained HTML page
+        for one command, including the themed CSS variables, a page header, a sidebar with
+        navigation links to other commands in the module, and all content sections such as
+        synopsis, syntax, aliases, description, examples, parameters, inputs, outputs,
+        notes, and related links.
+
+    .PARAMETER Help
+        The PlatyPS CommandHelp model object for the command to render.
+
+    .PARAMETER AllCommands
+        An array of command name strings used to build the sidebar navigation links.
+        Defaults to an empty array when omitted.
+
+    .PARAMETER Theme
+        A hashtable of CSS variable names to values, as returned by Resolve-HtmlTheme.
+        When empty or omitted, the built-in default theme is used.
+
+    .EXAMPLE
+        ```powershell
+        $importParams = @{
+            Path = '.\docs\MyModule\Get-Widget.md'
+        }
+        $help = Import-MarkdownCommandHelp @importParams
+        $pageParams = @{
+            Help        = $help
+            AllCommands = @('Get-Widget', 'Set-Widget')
+            Theme       = Resolve-HtmlTheme
+        }
+        New-HelpPage @pageParams
+        ```
+
+        Returns the complete HTML string for the Get-Widget command page with sidebar
+        navigation and the default theme applied.
+    #>
     param(
         [Microsoft.PowerShell.PlatyPS.Model.CommandHelp] $Help,
         [string[]] $AllCommands = @(),

@@ -42,14 +42,26 @@
     Emit the generated FileInfo objects to the pipeline.
 
 .EXAMPLE
+    ```powershell
+    $exportParams = @{
+        OutputFolder = '.\html'
+        Force        = $true
+    }
     Get-Command -Module Microsoft.PowerShell.Utility |
         Select-Object -First 5 |
         New-CommandHelp |
-        .\Export-HtmlCommandHelp.ps1 -OutputFolder .\html -Force
+        Export-HtmlCommandHelp @exportParams
+    ```
 
 .EXAMPLE
+    ```powershell
+    $exportParams = @{
+        OutputFolder = '.\html'
+        PassThru     = $true
+    }
     Import-MarkdownCommandHelp -Path .\docs\MyModule\Get-Widget.md |
-        .\Export-HtmlCommandHelp.ps1 -OutputFolder .\html -PassThru
+        Export-HtmlCommandHelp @exportParams
+    ```
 
 .NOTES
 #>

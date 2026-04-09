@@ -11,6 +11,24 @@ function Resolve-HtmlTheme {
     .PARAMETER ThemeFile
         Optional path to a .psd1 theme file.  When omitted the built-in default
         theme is returned.
+
+    .EXAMPLE
+        ```powershell
+        Resolve-HtmlTheme
+        ```
+
+        Returns the built-in default theme hashtable with all CSS variable values.
+
+    .EXAMPLE
+        ```powershell
+        $themeParams = @{
+            ThemeFile = '.\themes\Dracula.psd1'
+        }
+        Resolve-HtmlTheme @themeParams
+        ```
+
+        Loads the Dracula theme file and merges it over the built-in defaults,
+        returning the combined hashtable.
     #>
     param(
         [string] $ThemeFile

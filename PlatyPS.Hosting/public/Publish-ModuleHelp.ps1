@@ -32,19 +32,43 @@ function Publish-ModuleHelp {
         When specified, overwrites existing files in the destination without prompting.
 
         .EXAMPLE
-        Publish-ModuleHelp -SiteName MyDocsSite -SiteRoot C:\moduledocs\mydocssite -HelpContent .\help\html\MyModule
+        ```powershell
+        $publishParams = @{
+            SiteName    = 'MyDocsSite'
+            SiteRoot    = 'C:\moduledocs\mydocssite'
+            HelpContent = '.\help\html\MyModule'
+        }
+        Publish-ModuleHelp @publishParams
+        ```
 
         Stops the MyDocsSite IIS site and copies the HTML help files from the local
         .\help\html\MyModule folder to C:\moduledocs\mydocssite.
 
         .EXAMPLE
-        Publish-ModuleHelp -SiteName MyDocsSite -SiteRoot C:\moduledocs\mydocssite -HelpContent .\help\html\MyModule -Force
+        ```powershell
+        $publishParams = @{
+            SiteName    = 'MyDocsSite'
+            SiteRoot    = 'C:\moduledocs\mydocssite'
+            HelpContent = '.\help\html\MyModule'
+            Force       = $true
+        }
+        Publish-ModuleHelp @publishParams
+        ```
 
         Stops the MyDocsSite IIS site and copies the HTML help files, overwriting any
         existing files in the destination.
 
         .EXAMPLE
-        Publish-ModuleHelp -SiteName MyDocsSite -SiteRoot C:\moduledocs\mydocssite -HelpContent .\help\html\MyModule -Computername webserver01 -Credential (Get-Credential)
+        ```powershell
+        $publishParams = @{
+            SiteName     = 'MyDocsSite'
+            SiteRoot     = 'C:\moduledocs\mydocssite'
+            HelpContent  = '.\help\html\MyModule'
+            Computername = 'webserver01'
+            Credential   = (Get-Credential)
+        }
+        Publish-ModuleHelp @publishParams
+        ```
 
         Stops the MyDocsSite IIS site on the remote computer webserver01 and copies the
         HTML help files, authenticating with the provided credentials.

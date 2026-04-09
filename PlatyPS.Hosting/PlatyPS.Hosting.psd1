@@ -12,7 +12,7 @@
 RootModule = '.\PlatyPS.Hosting.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.1'
+ModuleVersion = '1.2.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -70,20 +70,35 @@ Description = 'PlatyPS.Hosting is a PowerShell module that extends the Microsoft
 
 # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
 FunctionsToExport = @(
+    'ConvertTo-Aliases',
+    'ConvertTo-CodeBlock',
+    'ConvertTo-Description',
+    'ConvertTo-Examples',
+    'ConvertTo-HtmlEncoded',
     'ConvertTo-HugoFormat',
+    'ConvertTo-InputsOutputs',
+    'ConvertTo-Notes',
+    'ConvertTo-Parameters',
+    'ConvertTo-RelatedLinks',
+    'ConvertTo-Synopsis',
+    'ConvertTo-Syntax',
     'Export-HtmlCommandHelp',
+    'New-HelpPage',
     'New-ModuleHelp',
-    'Publish-ModuleHelp'
+    'New-ModuleIndexPage',
+    'Publish-ModuleHelp',
+    'Resolve-HtmlTheme',
+    'Write-Section'
 )
 
 # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-CmdletsToExport = '*'
+CmdletsToExport = ''
 
 # Variables to export from this module
-VariablesToExport = '*'
+VariablesToExport = ''
 
 # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-AliasesToExport = '*'
+AliasesToExport = ''
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -128,7 +143,7 @@ PrivateData = @{
 } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+ HelpInfoURI = 'https://steviecoaster.github.io/PlatyPS.Hosting/'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''

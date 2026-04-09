@@ -1,4 +1,39 @@
 function New-ModuleIndexPage {
+    <#
+    .SYNOPSIS
+        Builds the HTML module index page for a set of commands.
+
+    .DESCRIPTION
+        Creates a self-contained HTML landing page that lists all commands from a module
+        in a table with their names and synopses, plus a sidebar navigation list. The
+        page uses CSS variables from the provided theme hashtable, falling back to the
+        built-in default theme when none is supplied.
+
+    .PARAMETER ModuleName
+        The name of the module, displayed in the page header and title.
+
+    .PARAMETER Commands
+        An array of PlatyPS CommandHelp objects to list on the index page.
+
+    .PARAMETER Theme
+        A hashtable of CSS variable names to values, as returned by Resolve-HtmlTheme.
+        When empty or omitted, the built-in default theme is used.
+
+    .EXAMPLE
+        ```powershell
+        $commands = Measure-PlatyPSMarkdown -Path .\docs\MyModule\*.md |
+            Where-Object Filetype -match 'CommandHelp' |
+            Import-MarkdownCommandHelp -Path { $_.FilePath }
+        $indexParams = @{
+            ModuleName = 'MyModule'
+            Commands   = $commands
+            Theme      = Resolve-HtmlTheme
+        }
+        New-ModuleIndexPage @indexParams
+        ```
+
+        Returns the HTML string for the MyModule index page listing all commands.
+    #>
     param(
         [string] $ModuleName,
         [Microsoft.PowerShell.PlatyPS.Model.CommandHelp[]] $Commands,

@@ -44,14 +44,27 @@ function New-ModuleHelp {
         as a starting point.
 
     .EXAMPLE
+        ```powershell
         Import-Module MyModule
-        New-ModuleHelp -ModuleName MyModule -OutputFolder .\docs
+        $helpParams = @{
+            ModuleName   = 'MyModule'
+            OutputFolder = '.\docs'
+        }
+        New-ModuleHelp @helpParams
+        ```
 
         Generates MAML and Markdown help for MyModule under .\docs\.
 
     .EXAMPLE
+        ```powershell
         Import-Module PowerShellUniversal.Plaster
-        New-ModuleHelp -ModuleName PowerShellUniversal.Plaster -OutputFolder .\docs -Html
+        $helpParams = @{
+            ModuleName   = 'PowerShellUniversal.Plaster'
+            OutputFolder = '.\docs'
+            Html         = $true
+        }
+        New-ModuleHelp @helpParams
+        ```
 
         Generates MAML, Markdown, and HTML help for the module.
 

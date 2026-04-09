@@ -1,9 +1,30 @@
 function ConvertTo-CodeBlock {
     <#
-    Wraps fenced code-block text in a <pre><code> element.
-    PlatyPS stores example Remarks as markdown, which can contain fenced
-    ```powershell … ``` blocks.  This function extracts those blocks and
-    wraps the rest as plain paragraphs.
+    .SYNOPSIS
+        Converts markdown fenced code blocks to HTML <pre><code> elements.
+
+    .DESCRIPTION
+        Parses a markdown string for fenced blocks and converts each block to a
+        <pre><code class="language-powershell"> HTML element. Text outside of fenced
+        blocks that contains non-whitespace characters is wrapped in <p> tags. Any
+        unclosed fenced block at end of input is flushed as a code element.
+
+        PlatyPS stores example Remarks as markdown which can contain fenced
+        powershell blocks - this function handles that conversion.
+
+    .PARAMETER Markdown
+        A markdown string to parse, typically the Remarks property of a PlatyPS example.
+
+    .EXAMPLE
+        ```powershell
+        $importParams = @{
+            Path = '.\docs\MyModule\Get-Widget.md'
+        }
+        $help = Import-MarkdownCommandHelp @importParams
+        ConvertTo-CodeBlock -Markdown $help.Examples[0].Remarks
+        ```
+
+        Converts the fenced PowerShell code in the first example's Remarks to HTML.
     #>
     param([string]$Markdown)
     if (-not $Markdown) { return '' }
